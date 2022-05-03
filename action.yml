@@ -1,0 +1,24 @@
+---
+name: 'Deploy to Heroku'
+description: "login and git-push deploy to heroku app"
+inputs:
+  app_name:
+    description: 'Heroku app name'
+    required: true
+  email:
+    description: 'user to login'
+    required: true
+  api_key:
+    description: 'API key for the user'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: deploying to Heroku
+      id: remove
+      shell: bash
+      run: ${{ github.action_path }}/deploy.sh
+      env:
+        HEROKU_API_KEY: ${{ inputs.api_key }}
+        HEROKU_APP: ${{ inputs.app_name }}
+        HEROKU_EMAIL: ${{ inputs.email }}
